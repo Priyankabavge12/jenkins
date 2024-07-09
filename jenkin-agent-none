@@ -1,0 +1,30 @@
+pipeline {
+    agent none
+    
+    stages {
+        stage('Build') {
+            agent {
+                label 'docker' // Specify a specific agent label for this stage
+            }
+            steps {
+                sh 'docker build -t myapp .'
+            }
+        }
+        stage('Test') {
+            agent {
+                label 'docker' // Specify the same agent label for consistency
+            }
+            steps {
+                sh 'docker run myapp test'
+            }
+        }
+        stage('Deploy') {
+            when {
+                branch 'master'
+            }
+            steps {
+                sh 'docker push myapp:latest'
+            }
+        }
+    }
+}
