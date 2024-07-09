@@ -3,20 +3,15 @@ pipeline {
 	agent any
 
 	stages {
-		stage('Checkout') {
+		stage('code Checkout') {
 			steps {
-				echo "This is git clone stage"
-				sh "sleep 5"
-				sh "ls -lrt"
+				git branch: 'main', credentialsId: 'github_cred', url: 'https://github.com/Priyankabavge12/jenkins.git'
 			}
 		}
 
 		stage('Build') {
 			steps {
-				sh ''' 
-					echo Complie and build the package
-				    sleep 5
-				'''
+				sh 'ls -lrt'
 			}
 		}
 
