@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                label 'docker' // Specify a specific agent label for this stage
+                label 'slave1' // Specify a specific agent label for this stage
             }
             steps {
                 sh 'docker build -t myapp .'
@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Test') {
             agent {
-                label 'docker' // Specify the same agent label for consistency
+                label 'slave2' // Specify the same agent label for consistency
             }
             steps {
                 sh 'docker run myapp test'
@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                branch 'master'
+                branch 'Built-in Node'
             }
             steps {
                 sh 'docker push myapp:latest'
