@@ -8,7 +8,7 @@ pipeline{
                   url: 'https://github.com/Priyankabavge12/jenkins.git'
             }
         }
-        stage('check files'){
+        stage('check files with git'){
             steps{
                 sh 'ls -lrt'         }
         }
@@ -20,7 +20,7 @@ pipeline{
                           credentialsID: 'github_cred']]])
             }
         }
-         stage('check files'){
+         stage('check files with checkout'){
             steps{
                 sh 'ls -lrt'         }
         }
