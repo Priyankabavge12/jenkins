@@ -1,0 +1,41 @@
+def docker_mvn(command) {
+    sh "docker run -i --rm -w /app -v calculator_app:/app maven ${command}"
+}
+
+pipeline {
+    agent any
+    stages {
+        stage('CHECKOUT') {
+            steps {
+                checkout([$class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        userRemoteConfigs: [[url: 'https://github.com/harshaprakash100/java_app.git',
+                        credentialsId: 'github_hp']]])
+            }
+        }
+
+        stage('Unit Testing') {
+            steps {
+                script {
+                    docker_mvn('mvn test')
+                }
+            }
+        }
+
+        stage('Integration Testing') {
+            steps {
+                script {
+                    docker_mvn('mvn integration-test')
+                }
+            }
+        }
+
+        stage('Load Testing') {
+            steps {
+                script {
+                    docker_mvn('mvn clean verify')
+                }
+            }
+        }
+    }
+}
