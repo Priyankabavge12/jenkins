@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven_3.9.8'
+    }
+
+    stages {
+        stage('Code Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        userRemoteConfigs: [[url: 'https://github.com/Priyankabavge12/jenkins.git',
+                        credentialsId: 'git-hub']]])
+            }
+        }
+
+        stage('Unit Testing') {
+            steps {
+                sh '''
+                    mvn test
+                '''
+            }
+        }
+
+        stage('Integration Testing') {
+            steps {
+                 {
+                    sh 'mvn integration-test'
+                }
+            }
+        }
+
+        stage('Load Testing') {
+            steps {
+            {
+                    sh 'mvn clean verify'
+                }
+            }
+        }
+
+        stage('Check Files') {
+            steps {
+             {
+                    sh 'tree'
+                }
+            }
+        }
+
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
