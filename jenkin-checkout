@@ -4,21 +4,13 @@ pipeline{
         stage('Code CHECKOUT with git'){
             steps{
                 git branch: 'main',
-                 credentialsId: 'github_cred',
+                 credentialsId: 'github',
                   url: 'https://github.com/Priyankabavge12/jenkins.git'
             }
         }
         stage('check files with git'){
             steps{
                 sh 'ls -lrt'         }
-        }
-        stage('code Checkout with checkout') {
-            steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/main']],
-                          userRemoteConfigs: [[url: 'https://github.com/Priyankabavge12/jenkins.git',
-                          credentialsID: 'github_cred']]])
-            }
         }
          stage('check files with checkout'){
             steps{
