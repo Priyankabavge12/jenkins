@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github',
+                    url: 'https://github.com/Priyankabavge12/jenkins.git'
+            }
+        }
+
+       
+
+        stage('BUILD_main') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo "BUILDING the app from main branch"
+                sh 'ls -lrt'
+            }
+        }
+
+        stage('BUILD_dev') {
+            when {
+                branch 'dev'
+            }
+            steps {
+                echo "BUILDING the app from dev branch"
+                sh 'ls -lrt'
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
