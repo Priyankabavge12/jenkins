@@ -16,6 +16,18 @@ pipeline{
             steps{
                 sh 'ls -lrt'         }
         }
+        stage('Code CHECKOUT'){
+            steps{
+                stage('Code CHECKOUT with git'){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], 
+                [[credentialsId: 'github', 
+                url: 'https://github.com/Priyankabavge12/jenkins.git']])
+            }
+        }
+            }
+        }
+
     }
 }
 
