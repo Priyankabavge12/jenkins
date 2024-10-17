@@ -1,17 +1,28 @@
-pipeline{
+pipeline {
     agent any
-   stages{
-    stage('STAGE 1'){
-        steps{
-            catchError(stageResult:'FAILURE',buildResult:'SUCCESS')
-            echo "this is STAGE 1"
-            sh 'exit 1'
-             }
-    }
-    stage('STAGE 2'){
-    steps{
-        echo "this is STAGE 2"
-    }
-   }
-          }
+    stages {
+        stage('STAGE 1') {
+            steps {
+                 
+                    echo "This is STAGE 1"
+                    sh 'exit 1'
+                }            }
+        stage('STAGE 2') {
+            steps {
+                    echo "This is STAGE 2"
+                    sh 'exit 0'
+                }
+            }
+        stage('STAGE 3') {
+            steps {
+                echo "This is STAGE 3"
+            }
         }
+
+         stage('STAGE 4') {
+            steps {
+                echo "This is STAGE 4"
+            }
+        }
+    }
+}     
