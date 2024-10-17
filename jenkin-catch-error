@@ -6,13 +6,12 @@ pipeline{
             catchError(stageResult:'FAILURE',buildResult:'SUCCESS')
             echo "this is STAGE 1"
             sh 'exit 1'
-
-        }
+             }
     }
-   }
-   stage('STAGE 2'){
+    stage('STAGE 2'){
     steps{
         echo "this is STAGE 2"
     }
    }
-}
+          }
+        }
